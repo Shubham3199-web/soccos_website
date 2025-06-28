@@ -665,19 +665,20 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
-        display: flex;
+        display: block;
+        cursor: pointer;
     }
 
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 80px;
         flex-direction: column;
-        background-color: var(--beige);
+        background-color: var(--light-bg);
         width: 100%;
         text-align: center;
         transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(107, 122, 58, 0.08);
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
         padding: 2rem 0;
     }
 
@@ -685,55 +686,213 @@ body {
         left: 0;
     }
 
+    .nav-item {
+        margin: 1rem 0;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
     .hero-container {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         text-align: center;
-        gap: 2rem;
+        padding: 2rem 1rem;
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin: 1rem 0;
     }
 
     .hero-buttons {
-        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .hero-image {
+        margin-top: 2rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .experience-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .exp-icon {
+        margin-bottom: 1rem;
     }
 
     .services-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        padding: 1.5rem;
+    }
+
+    .education-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .edu-icon {
+        margin-bottom: 1rem;
+    }
+
+    .analytics-graphs {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .analytics-graphs > div {
+        min-width: 280px;
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .analytics-graphs canvas {
+        height: 180px !important;
+    }
+    
+    .analytics-graphs canvas#academicChart {
+        height: 200px !important;
     }
 
     .contact-content {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         gap: 2rem;
     }
 
-    .expert .container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .contact-info {
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .contact-form {
+        padding: 1.5rem;
     }
 
     .footer-content {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        text-align: center;
         gap: 2rem;
     }
 
-    .form-row {
-        grid-template-columns: 1fr;
+    .footer-nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
 
-    .container {
-        padding: 0 15px;
+    .experience-item,
+    .education-item,
+    .service-card {
+        padding: 1rem;
+    }
+
+    .analytics-graphs > div {
+        min-width: 250px;
+        padding: 0.8rem;
+    }
+
+    .analytics-graphs canvas {
+        height: 160px !important;
+    }
+
+    .analytics-graphs canvas#academicChart {
+        height: 180px !important;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-container {
+        padding: 3rem 2rem;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .analytics-graphs {
+        gap: 1.5rem;
+    }
+
+    .analytics-graphs > div {
+        min-width: 220px;
+        max-width: 300px;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .btn, .cta-button {
+        min-height: 44px;
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-link {
+        padding: 1rem 0.5rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .service-card,
+    .experience-item,
+    .education-item {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
     }
 }
 

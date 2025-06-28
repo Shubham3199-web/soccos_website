@@ -8,7 +8,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 
-document.querySelectorAll('section, .service-card, .experience-item, .education-item, .skill-item, .analytics-graphs, .contact-info, .contact-form').forEach(el => {
+document.querySelectorAll('section, .service-card, .experience-item, .education-item, .analytics-graphs, .contact-info, .contact-form').forEach(el => {
   observer.observe(el);
 });
 
