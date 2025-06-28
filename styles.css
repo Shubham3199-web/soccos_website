@@ -786,4 +786,56 @@ section.visible, .service-card.visible, .experience-item.visible, .education-ite
 .service-card:hover, .experience-item:hover, .education-item:hover, .skill-item:hover {
     box-shadow: 0 8px 32px rgba(107,122,58,0.10);
     transform: translateY(-4px) scale(1.03);
+}
+
+/* Analytics Section Styling */
+.analytics-graphs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 2rem;
+}
+
+.analytics-graphs > div {
+    flex: 1;
+    min-width: 260px;
+    max-width: 340px;
+    text-align: center;
+    background: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(107,122,58,0.08);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.analytics-graphs > div:hover {
+    box-shadow: 0 8px 32px rgba(107,122,58,0.12);
+    transform: translateY(-4px);
+}
+
+.analytics-graphs h3 {
+    margin-bottom: 1rem;
+    color: var(--olive);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.analytics-graphs canvas {
+    max-width: 100%;
+    height: auto !important;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .analytics-graphs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .analytics-graphs > div {
+        min-width: 280px;
+        max-width: 100%;
+    }
 } 
