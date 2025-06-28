@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -293,6 +292,9 @@
                     <canvas id="academicChart" width="220" height="220" aria-label="Academic Performance Chart"></canvas>
                 </div>
             </div>
+            <div id="chartLoadingMessage" style="text-align: center; margin-top: 1rem; color: #6B7A3A; font-style: italic;">
+                Loading interactive charts...
+            </div>
         </div>
     </section>
 
@@ -374,5 +376,9 @@
             }
         });
     </script>
+    
+    <!-- Chart.js - Load at the end -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 </html> 

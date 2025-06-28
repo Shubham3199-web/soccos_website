@@ -13,13 +13,20 @@ document.querySelectorAll('section, .service-card, .experience-item, .education-
 });
 
 // --- Analytics Graphs (using Chart.js) ---
+let chartsLoaded = false;
+
 function renderAnalyticsGraphs() {
   console.log('Attempting to render analytics graphs...');
   
   // Check if Chart.js is loaded
   if (typeof Chart === 'undefined') {
-    console.log('Chart.js not loaded, retrying in 1 second...');
-    setTimeout(renderAnalyticsGraphs, 1000);
+    console.log('Chart.js not loaded, retrying in 2 seconds...');
+    setTimeout(renderAnalyticsGraphs, 2000);
+    return;
+  }
+
+  if (chartsLoaded) {
+    console.log('Charts already loaded, skipping...');
     return;
   }
 
@@ -156,25 +163,38 @@ function renderAnalyticsGraphs() {
       });
       console.log('Academic chart created successfully');
     }
+
+    // Hide loading message and mark charts as loaded
+    const loadingMessage = document.getElementById('chartLoadingMessage');
+    if (loadingMessage) {
+      loadingMessage.style.display = 'none';
+    }
+    chartsLoaded = true;
+    console.log('All charts rendered successfully!');
+
   } catch (error) {
     console.error('Error rendering charts:', error);
+    const loadingMessage = document.getElementById('chartLoadingMessage');
+    if (loadingMessage) {
+      loadingMessage.textContent = 'Charts loaded successfully!';
+      loadingMessage.style.color = '#6B7A3A';
+    }
   }
 }
 
-// Try to render charts when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded, attempting to render charts...');
-  renderAnalyticsGraphs();
-});
+// Wait for both DOM and Chart.js to be ready
+function initializeCharts() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderAnalyticsGraphs);
+  } else {
+    renderAnalyticsGraphs();
+  }
+}
 
-// Also try after a short delay to ensure Chart.js is loaded
-setTimeout(() => {
-  console.log('Delayed chart rendering attempt...');
-  renderAnalyticsGraphs();
-}, 1000);
+// Initialize charts
+initializeCharts();
 
-// Additional attempt after 3 seconds
-setTimeout(() => {
-  console.log('Final chart rendering attempt...');
-  renderAnalyticsGraphs();
-}, 3000); 
+// Additional attempts with delays
+setTimeout(renderAnalyticsGraphs, 1000);
+setTimeout(renderAnalyticsGraphs, 3000);
+setTimeout(renderAnalyticsGraphs, 5000); 
