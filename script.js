@@ -1,200 +1,273 @@
-// Intersection Observer for entrance animations
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
+// Mobile Navigation
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
 
-document.querySelectorAll('section, .service-card, .experience-item, .education-item, .analytics-graphs, .contact-info, .contact-form').forEach(el => {
-  observer.observe(el);
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
 });
 
-// --- Analytics Graphs (using Chart.js) ---
-let chartsLoaded = false;
+// Navbar scroll effect
+let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
 
-function renderAnalyticsGraphs() {
-  console.log('Attempting to render analytics graphs...');
-  
-  // Check if Chart.js is loaded
-  if (typeof Chart === 'undefined') {
-    console.log('Chart.js not loaded, retrying in 2 seconds...');
-    setTimeout(renderAnalyticsGraphs, 2000);
-    return;
-  }
+window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+        // Scrolling down
+        navbar.style.transform = 'translateY(-100%)';
+    } else {
+        // Scrolling up
+        navbar.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollTop = scrollTop;
+});
 
-  if (chartsLoaded) {
-    console.log('Charts already loaded, skipping...');
-    return;
-  }
+// Intersection Observer for animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
 
-  console.log('Chart.js is loaded, proceeding with chart creation...');
-
-  try {
-    // Revenue Growth at Sleepy Owl Coffee
-    const ctx1 = document.getElementById('revenueGrowthChart');
-    console.log('Revenue chart canvas found:', ctx1);
-    if (ctx1) {
-      const revenueChart = new Chart(ctx1, {
-        type: 'line',
-        data: {
-          labels: ['2020', '2021', '2022'],
-          datasets: [{
-            label: 'ARR (USD Millions)',
-            data: [2.2, 4.5, 7.2],
-            borderColor: '#6B7A3A',
-            backgroundColor: 'rgba(107,122,58,0.1)',
-            fill: true,
-            tension: 0.4,
-            borderWidth: 3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { 
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: 'rgba(107,122,58,0.9)',
-              titleColor: '#fff',
-              bodyColor: '#fff'
-            }
-          },
-          scales: { 
-            y: { 
-              beginAtZero: true,
-              grid: {
-                color: 'rgba(107,122,58,0.1)'
-              }
-            },
-            x: {
-              grid: {
-                color: 'rgba(107,122,58,0.1)'
-              }
-            }
-          }
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
         }
-      });
-      console.log('Revenue chart created successfully');
-    }
+    });
+}, observerOptions);
 
-    // Acquisitions at UpScalio
-    const ctx2 = document.getElementById('acquisitionsChart');
-    console.log('Acquisitions chart canvas found:', ctx2);
-    if (ctx2) {
-      const acquisitionsChart = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-          labels: ['Acquisitions'],
-          datasets: [{
-            label: 'No. of Acquisitions',
-            data: [7],
-            backgroundColor: '#B6A77A',
-            borderColor: '#6B7A3A',
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          indexAxis: 'y',
-          plugins: { 
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: 'rgba(107,122,58,0.9)',
-              titleColor: '#fff',
-              bodyColor: '#fff'
-            }
-          },
-          scales: { 
-            x: { 
-              beginAtZero: true, 
-              max: 10,
-              grid: {
-                color: 'rgba(107,122,58,0.1)'
-              }
-            },
-            y: {
-              grid: {
-                color: 'rgba(107,122,58,0.1)'
-              }
-            }
-          }
+// Observe elements for animation
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll(
+        '.hero-content, .hero-visual, .section-header, .about-grid > *, .timeline-item, .service-card, .contact-content > *, .pricing-card'
+    );
+    
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+});
+
+// Form handling
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        
+        // Simple validation
+        if (!data.name || !data.email || !data.message) {
+            alert('Please fill in all required fields.');
+            return;
         }
-      });
-      console.log('Acquisitions chart created successfully');
-    }
-
-    // Academic Performance
-    const ctx3 = document.getElementById('academicChart');
-    console.log('Academic chart canvas found:', ctx3);
-    if (ctx3) {
-      const academicChart = new Chart(ctx3, {
-        type: 'doughnut',
-        data: {
-          labels: ['CFA Level 1', 'B.Com (CGPA)', 'CBSE (XII)', 'CBSE (X)'],
-          datasets: [{
-            data: [1, 7.2, 92.2, 95.2],
-            backgroundColor: ['#6B7A3A', '#B6A77A', '#EDE6D6', '#D9CBA3'],
-            borderColor: '#fff',
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { 
-            legend: { 
-              position: 'bottom',
-              labels: {
-                padding: 20,
-                usePointStyle: true
-              }
-            },
-            tooltip: {
-              backgroundColor: 'rgba(107,122,58,0.9)',
-              titleColor: '#fff',
-              bodyColor: '#fff'
-            }
-          }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+            alert('Please enter a valid email address.');
+            return;
         }
-      });
-      console.log('Academic chart created successfully');
-    }
-
-    // Hide loading message and mark charts as loaded
-    const loadingMessage = document.getElementById('chartLoadingMessage');
-    if (loadingMessage) {
-      loadingMessage.style.display = 'none';
-    }
-    chartsLoaded = true;
-    console.log('All charts rendered successfully!');
-
-  } catch (error) {
-    console.error('Error rendering charts:', error);
-    const loadingMessage = document.getElementById('chartLoadingMessage');
-    if (loadingMessage) {
-      loadingMessage.textContent = 'Charts loaded successfully!';
-      loadingMessage.style.color = '#6B7A3A';
-    }
-  }
+        
+        // Simulate form submission
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        
+        submitButton.innerHTML = '<span>Sending...</span>';
+        submitButton.disabled = true;
+        
+        setTimeout(() => {
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            this.reset();
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+        }, 2000);
+    });
 }
 
-// Wait for both DOM and Chart.js to be ready
-function initializeCharts() {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderAnalyticsGraphs);
-  } else {
-    renderAnalyticsGraphs();
-  }
+// Chart animation for hero section
+document.addEventListener('DOMContentLoaded', () => {
+    const chartBars = document.querySelectorAll('.chart-bar');
+    
+    setTimeout(() => {
+        chartBars.forEach((bar, index) => {
+            setTimeout(() => {
+                bar.style.animation = 'growUp 1s ease-out forwards';
+            }, index * 200);
+        });
+    }, 1000);
+});
+
+// Typing effect for hero title (optional enhancement)
+function typeWriter(element, text, speed = 100) {
+    let i = 0;
+    element.innerHTML = '';
+    
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    
+    type();
 }
 
-// Initialize charts
-initializeCharts();
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const heroVisual = document.querySelector('.hero-visual');
+    
+    if (heroVisual && scrolled < window.innerHeight) {
+        heroVisual.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+});
 
-// Additional attempts with delays
-setTimeout(renderAnalyticsGraphs, 1000);
-setTimeout(renderAnalyticsGraphs, 3000);
-setTimeout(renderAnalyticsGraphs, 5000); 
+// Add loading animation
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
+// Keyboard navigation support
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        // Close mobile menu on escape
+        hamburger?.classList.remove('active');
+        navMenu?.classList.remove('active');
+    }
+});
+
+// Performance optimization: Debounce scroll events
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Apply debounce to scroll events
+const debouncedScrollHandler = debounce(() => {
+    // Any scroll-based animations or effects can go here
+}, 10);
+
+window.addEventListener('scroll', debouncedScrollHandler);
+
+// Add smooth reveal animation for timeline items
+const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateX(0)';
+        }
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.timeline-item').forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(-30px)';
+    item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+    timelineObserver.observe(item);
+});
+
+// Add hover effects for service cards
+document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-8px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) scale(1)';
+    });
+});
+
+// Add click tracking for analytics (placeholder)
+function trackEvent(eventName, properties = {}) {
+    // This would integrate with your analytics service
+    console.log('Event tracked:', eventName, properties);
+}
+
+// Track button clicks
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        trackEvent('button_click', {
+            button_text: e.target.textContent.trim(),
+            button_location: e.target.closest('section')?.id || 'unknown'
+        });
+    });
+});
+
+// Add copy to clipboard functionality for email
+const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+emailLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = link.href.replace('mailto:', '');
+        
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(email).then(() => {
+                // Show temporary notification
+                const notification = document.createElement('div');
+                notification.textContent = 'Email copied to clipboard!';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--success);
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    z-index: 10000;
+                    font-weight: 500;
+                    box-shadow: var(--shadow-lg);
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            });
+        } else {
+            // Fallback: open email client
+            window.location.href = link.href;
+        }
+    });
+});
