@@ -823,9 +823,16 @@ section.visible, .service-card.visible, .experience-item.visible, .education-ite
 }
 
 .analytics-graphs canvas {
+    width: 100% !important;
+    height: 200px !important;
     max-width: 100%;
-    height: auto !important;
     border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.analytics-graphs canvas#academicChart {
+    height: 220px !important;
 }
 
 @media (max-width: 768px) {
@@ -837,5 +844,13 @@ section.visible, .service-card.visible, .experience-item.visible, .education-ite
     .analytics-graphs > div {
         min-width: 280px;
         max-width: 100%;
+    }
+    
+    .analytics-graphs canvas {
+        height: 180px !important;
+    }
+    
+    .analytics-graphs canvas#academicChart {
+        height: 200px !important;
     }
 } 
