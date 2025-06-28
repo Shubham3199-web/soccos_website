@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -278,14 +279,19 @@
     <section id="analytics" class="analytics">
         <div class="container">
             <h2 class="section-title">Analytics & Achievements</h2>
-            <div class="analytics-placeholder">
-                <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
-                    <rect x="10" y="30" width="20" height="40" rx="4" fill="#bfc3a6"/>
-                    <rect x="40" y="10" width="20" height="60" rx="4" fill="#6b7a3a"/>
-                    <rect x="70" y="40" width="20" height="30" rx="4" fill="#e6e1d3"/>
-                    <rect x="100" y="20" width="10" height="50" rx="4" fill="#bfc3a6"/>
-                </svg>
-                <p style="color:var(--gray);margin-top:1rem;">Your analytics, KPIs, and achievements will be showcased here.<br><em>(Charts, graphs, and results coming soon!)</em></p>
+            <div class="analytics-graphs" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; align-items: flex-start;">
+                <div style="flex:1; min-width:260px; max-width:340px; text-align:center;">
+                    <h3 style="margin-bottom:0.5rem; color:var(--olive);">Revenue Growth (Sleepy Owl Coffee)</h3>
+                    <canvas id="revenueGrowthChart" width="320" height="200" aria-label="Revenue Growth Chart"></canvas>
+                </div>
+                <div style="flex:1; min-width:220px; max-width:300px; text-align:center;">
+                    <h3 style="margin-bottom:0.5rem; color:var(--olive);">Acquisitions (UpScalio)</h3>
+                    <canvas id="acquisitionsChart" width="220" height="200" aria-label="Acquisitions Chart"></canvas>
+                </div>
+                <div style="flex:1; min-width:220px; max-width:300px; text-align:center;">
+                    <h3 style="margin-bottom:0.5rem; color:var(--olive);">Academic Performance</h3>
+                    <canvas id="academicChart" width="220" height="220" aria-label="Academic Performance Chart"></canvas>
+                </div>
             </div>
         </div>
     </section>

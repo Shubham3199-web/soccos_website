@@ -756,4 +756,34 @@ body {
 /* Smooth scrolling for anchor links */
 html {
     scroll-padding-top: 80px;
+}
+
+/* Transitions & Animations */
+section, .service-card, .experience-item, .education-item, .skill-item, .analytics-placeholder, .contact-info, .contact-form {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+section.visible, .service-card.visible, .experience-item.visible, .education-item.visible, .skill-item.visible, .analytics-placeholder.visible, .contact-info.visible, .contact-form.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn, .cta-button {
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.btn:hover, .cta-button:hover {
+    box-shadow: 0 4px 16px rgba(107,122,58,0.12);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.service-card, .experience-item, .education-item, .skill-item {
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.service-card:hover, .experience-item:hover, .education-item:hover, .skill-item:hover {
+    box-shadow: 0 8px 32px rgba(107,122,58,0.10);
+    transform: translateY(-4px) scale(1.03);
 } 
